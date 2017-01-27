@@ -2,7 +2,7 @@
 'use strict'
 
 var electron = require('electron');
-var ipc = electron.Renderer;
+var ipc = electron.ipcRenderer;
 var soundButtons = document.querySelectorAll('.button-sound');
 
 for (var i=0;i<soundButtons.length;i++){
@@ -25,4 +25,9 @@ function prepareButton(buttonEl, soundName){
 var closeEl = document.querySelector('.close');
 closeEl.addEventListener('click', function(){
   ipc.send('close-main-window');
+});
+
+ipc.on('global-shortcut', function(arg){
+  var event = new MouseEvent('click');
+  soundButtons[arg].dispatchEvent(event);
 });
