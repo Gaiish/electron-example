@@ -4,6 +4,7 @@
 var electron = require('electron');
 var ipc = electron.ipcRenderer;
 var soundButtons = document.querySelectorAll('.button-sound');
+var settingsEl = document.querySelector('.settings');
 
 for (var i=0;i<soundButtons.length;i++){
   var soundButton = soundButtons[i];
@@ -30,4 +31,8 @@ closeEl.addEventListener('click', function(){
 ipc.on('global-shortcut', function(arg){
   var event = new MouseEvent('click');
   soundButtons[arg].dispatchEvent(event);
+});
+
+settingsEl.addEventListener('click', function(){
+  ipc.send('open-settings-window');
 });
